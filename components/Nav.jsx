@@ -24,7 +24,7 @@ const Nav = () => {
   return (
     <nav className="flex-between w-full mb-16 pt-3">
         <Link href="/" className="flex gap-2 flex-center">
-            <Image src="/assets/images/logo.svg" className="object-contain" width={50} height={50} alt="Tweeter logo" />
+            <Image src="/assets/images/logo.png" className="object-contain" width={50} height={50} alt="Tweeter logo" />
             <p className="logo_text">Tweeter</p>
         </Link>
 
