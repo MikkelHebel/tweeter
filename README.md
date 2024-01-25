@@ -10,6 +10,6 @@ This is my first next.js project. Where I have created a twitter like website ca
 ## Todo
 - [x] Implement CRUD capability
 - [x] Google login
-- [ ] Search functionality
-- [ ] Click on tags
+- [x] Search functionality
+- [x] Click on tags
 - [ ] View other profiles
