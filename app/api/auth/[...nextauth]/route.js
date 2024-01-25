@@ -33,8 +33,6 @@ const handler = NextAuth({
                         username: profile.name.replace(" ", ""),
                         image: profile.picture
                     });
-    
-                    await user.save();
                 }
     
                 return true;

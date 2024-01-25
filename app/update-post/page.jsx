@@ -1,15 +1,14 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Form from '@components/Form';
 
 const EditPost = () => {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
 
-  const searchParams = useSearchParams();
-  const postId = searchParams.get('id');
+  const postId = router.query && router.query.id; // Check if router.query is defined before accessing id
   const [post, setPost] = useState({
     post: '',
     tag: '',
@@ -30,11 +29,11 @@ const EditPost = () => {
   }, [postId])
   
 
-  const updatePost = async (e) => {
+  const editPost = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    if(!postId) return alert('Something went wrong! Post ID not found');
+    if(!postId) return alert('Something went wrong! Post ID not found.');
 
     try {
       const response = await fetch(`/api/posts/${postId}`, {
@@ -53,7 +52,7 @@ const EditPost = () => {
     } finally {
       setSubmitting(false);
     }
-  }
+  };
 
   return (
     <Form
@@ -61,9 +60,9 @@ const EditPost = () => {
       post={post}
       setPost={setPost}
       submitting={submitting}
-      handleSubmit={updatePost}
+      handleSubmit={editPost}
     />
-  )
-}
+  );
+};
 
 export default EditPost

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import User from '@models/user';
 
 let isConnected = false;
 
@@ -13,8 +14,6 @@ export const connectToDatabase = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
             dbName: "login",
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
         })
 
         isConnected = true;
