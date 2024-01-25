@@ -18,35 +18,66 @@ const PostCardList = ({ data, handleTagClick }) => {
 };
 
 const Feed = () => {
-  const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
 
-  const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
+  const [searchText, setSearchText] = useState('');
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const fetchPosts = async () => {
+    const res = await fetch('/api/posts/get');
+    const data = await res.json();
+
+    setPosts(data);
   }
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch('/api/posts/get');
-      const data = await res.json();
-
-      setPosts(data);
-    }
-
     fetchPosts();
-  }, [])
-  
+  }, []);
+
+  const filterPosts = (searchtext) => {
+    const regex = new RegExp(searchtext, 'i');
+    return posts.filter(
+      (post) =>
+      regex.test(post.creator.username) ||
+      regex.test(post.tag) ||
+      regex.test(post.title)
+  )};
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+
+    setSearchTimeout(() => {
+      const searchResult = filterPosts(e.target.value);
+      setSearchResults(searchResult);
+    }, 500)
+  }
+
+  const handleTagClick = (tag) => {
+    setSearchText(tag);
+
+    const searchResult = filterPosts(tag);
+    setSearchResults(searchResult);
+  };
 
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
-        <input type="text" placeholder="Search anything" value={searchText} onChange={handleSearchChange} required className="search_input peer" />
+        <input type="text" placeholder="Search anything..." value={searchText} onChange={handleSearchChange} required className="search_input peer" />
       </form>
 
-      <PostCardList
-        data={posts}
-        handleTagClick={() => {}}
-      />
+      {searchText ? (
+        <PostCardList
+          data={searchResults}
+          handleTagClick={() => {}}
+        />
+      ) : (
+        <PostCardList
+          data={posts}
+          handleTagClick={handleTagClick}
+        />
+      )}
     </section>
   )
 }
