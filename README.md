@@ -6,10 +6,3 @@ This is my first next.js project. Where I have created a twitter like website ca
 ![Tweeter Profile](https://github.com/MikkelHebel/tweeter/blob/main/pictures/Tweeter%20My%20Profile.png)
 ![Tweeter Create Post](https://github.com/MikkelHebel/tweeter/blob/main/pictures/Tweeter%20Create%20Post.png)
 ![Tweeter Edit Post](https://github.com/MikkelHebel/tweeter/blob/main/pictures/Tweeter%20Edit%20Post.png)
-
-## Todo
-- [x] Implement CRUD capability
-- [x] Google login
-- [x] Search functionality
-- [x] Click on tags
-- [ ] View other profiles

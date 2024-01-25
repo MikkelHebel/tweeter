@@ -15,6 +15,12 @@ const PostCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   }
   const [copied, setCopied] = useState("");
 
+  const handleProfileClick = () => {
+    if (post.creator._id === session?.user.id) return router.push('/profile');
+
+    router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+  }
+
   const handleCopy = () => {
     setCopied(post.post);
     navigator.clipboard.writeText(post.post);
@@ -24,7 +30,7 @@ const PostCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   return (
     <div className="post_card">
       <div className="flex justify-between items-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+        <div onClick={handleProfileClick} className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
           <Image
             src={post.creator.image}
             alt="Profile picture"
@@ -42,7 +48,7 @@ const PostCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={copied === post.post ? '/assets/icons/tick.svg' : '/assets/icons/copy.svg'}
-            alt="Copy link"
+            alt={copied === post.post ? 'Copied' : 'Copy'}
             width={20}
             height={20}
           />
