@@ -6,7 +6,7 @@ export const GET = async (req) => {
         await connectToDatabase();
         
         // Disabling cache
-        const posts = await Post.find({}).populate('creator').cache({ ttl: 10 });
+        const posts = await Post.find({}).populate('creator');
         return new Response(JSON.stringify(posts), { status: 200 });
     } catch (error) {
         console.log(error);
